@@ -24,7 +24,10 @@ public record Shipment(
 
     public BigDecimal sizeAllPackages() {
         return packages.stream()
-                .map(Pack::dimension)
+                .map(pack -> new Dimension(
+                        pack.length(),
+                        pack.width(),
+                        pack.height()))
                 .map(d -> d.roundDim(d))
                 .map(d -> d.getSizeByParameters(d))
                 .reduce(Dimension.zero(), BigDecimal::add);

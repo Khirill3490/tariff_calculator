@@ -2,7 +2,6 @@ package ru.fastdelivery.usecase;
 
 import lombok.RequiredArgsConstructor;
 import ru.fastdelivery.domain.common.price.Price;
-import ru.fastdelivery.domain.delivery.distanceCalc.DistanceProvider;
 import ru.fastdelivery.domain.delivery.shipment.Shipment;
 
 import javax.inject.Named;
@@ -25,9 +24,9 @@ public class TariffCalculateUseCase {
         var costBySize = weightPriceProvider.costPerMeter().multiply(sizeAllPackages);
         var price = costByWeight.max(minimalPrice).max(costBySize);
 
-        System.out.println("Цена актуальная " + price.amount().setScale(4, RoundingMode.HALF_UP));
-        System.out.println("Цена за вес " + costByWeight.amount().setScale(4, RoundingMode.HALF_UP));
-        System.out.println("Цена размер " + costBySize.amount().setScale(4, RoundingMode.HALF_UP));
+//        System.out.println("Цена актуальная " + price.amount().setScale(4, RoundingMode.HALF_UP));
+//        System.out.println("Цена за вес " + costByWeight.amount().setScale(4, RoundingMode.HALF_UP));
+//        System.out.println("Цена размер " + costBySize.amount().setScale(4, RoundingMode.HALF_UP));
 
         if (dist.compareTo(BASIC_DISTANCE) > 0) {
             return costByDistance(price, dist);
@@ -38,7 +37,6 @@ public class TariffCalculateUseCase {
     public Price costByDistance(Price price, BigDecimal dist) {
         BigDecimal newCost = dist.divide(BASIC_DISTANCE,4, RoundingMode.HALF_UP).multiply(price.amount())
                 .setScale(4, RoundingMode.HALF_UP);
-        System.out.println("Цена с учетом пути " + newCost);
         return new Price(newCost, price.currency());
     }
 

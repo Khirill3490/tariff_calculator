@@ -1,12 +1,13 @@
 package ru.fastdelivery.domain.delivery.distanceCalc;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.stereotype.Component;
+
 
 import java.math.BigDecimal;
 
 @Data
-@Component
+@AllArgsConstructor
 public class Range {
     private BigDecimal min;
     private BigDecimal max;

@@ -9,6 +9,6 @@ import ru.fastdelivery.domain.delivery.distanceCalc.DistanceProvider;
 @Data
 public class DistanceConfig implements DistanceProvider {
 
-    private final Range latitude;
-    private final Range longitude;
+    private Range latitude;
+    private Range longitude;
 }

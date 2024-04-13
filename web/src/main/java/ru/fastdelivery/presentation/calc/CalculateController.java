@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.fastdelivery.domain.common.currency.CurrencyFactory;
-import ru.fastdelivery.domain.common.dimension.Dimension;
+import ru.fastdelivery.domain.common.dimension.Length;
 import ru.fastdelivery.domain.common.weight.Weight;
 import ru.fastdelivery.domain.delivery.distanceCalc.DistanceCalculator;
 import ru.fastdelivery.domain.delivery.distanceCalc.DistanceFactory;
@@ -19,7 +19,6 @@ import ru.fastdelivery.domain.delivery.pack.Pack;
 import ru.fastdelivery.domain.delivery.shipment.Shipment;
 import ru.fastdelivery.presentation.api.request.CalculatePackagesRequest;
 import ru.fastdelivery.presentation.api.response.CalculatePackagesResponse;
-import ru.fastdelivery.domain.delivery.distanceCalc.DistanceProvider;
 import ru.fastdelivery.usecase.TariffCalculateUseCase;
 
 @RestController
@@ -42,13 +41,13 @@ public class CalculateController {
         var packsWeightsAndSize = request.packages().stream()
                 .map(cargoPackage -> {
                     Weight weight = new Weight(cargoPackage.weight());
-                    Dimension dimension = new Dimension(
-                            cargoPackage.length(),
-                            cargoPackage.width(),
-                            cargoPackage.height());
-                    return new Pack(weight, dimension);
+                    Length length = new Length(cargoPackage.length());
+                    Length width = new Length(cargoPackage.width());
+                    Length height = new Length(cargoPackage.height());
+                    return new Pack(weight, length, width, height);
                 })
                 .toList();
+
 
         var departure = request.departure();
         var destination = request.destination();
@@ -59,9 +58,6 @@ public class CalculateController {
                 departure.longitude(),
                 destination.latitude(),
                 destination.longitude()).calcDist();
-
-        System.out.println("Расстояние " + getDistance);
-
 
         var shipment = new Shipment(packsWeightsAndSize, currencyFactory.create(request.currencyCode()));
         var calculatedPrice = tariffCalculateUseCase.calc(shipment, getDistance);

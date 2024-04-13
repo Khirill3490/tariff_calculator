@@ -12,7 +12,7 @@ public record DistanceCalculator(
         BigDecimal llong1,
         BigDecimal llat2,
         BigDecimal llong2) {
-    private final static double RADIUS = 6_372_795;
+    private final static BigDecimal RADIUS = BigDecimal.valueOf(6_372);
     private static final MathContext mathContext = new MathContext(10);
 
     public DistanceCalculator{
@@ -43,13 +43,7 @@ public record DistanceCalculator(
         BigDecimal x = sl1.multiply(sl2).add(cl1.multiply(cl2).multiply(cdelta));
 
         BigDecimal ad = BigDecimalMath.atan2(y, x, mathContext);
-        final BigDecimal RADIUS = BigDecimal.valueOf(6371); // Радиус Земли в километрах
 
-        BigDecimal dist = ad.multiply(RADIUS).setScale(4, RoundingMode.HALF_UP);
-        return dist;
-    }
-
-    private BigDecimal getKilometers(BigDecimal meters) {
-        return meters.divide(BigDecimal.valueOf(1000), 4, RoundingMode.HALF_UP);
+        return ad.multiply(RADIUS).setScale(4, RoundingMode.HALF_UP);
     }
 }

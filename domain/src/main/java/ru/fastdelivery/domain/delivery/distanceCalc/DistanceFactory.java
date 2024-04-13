@@ -21,7 +21,5 @@ public class DistanceFactory {
     private boolean isPointsValid(Range range, BigDecimal a, BigDecimal b) {
         return (a.compareTo(range.getMin()) >= 0 && a.compareTo(range.getMax()) <= 0)
                 && (b.compareTo(range.getMin()) >= 0 && b.compareTo(range.getMax()) <= 0);
-//        return (a >= range.getMin() && a <= range.getMax())
-//                && (b >= range.getMin() && b <= range.getMax());
     }
 }

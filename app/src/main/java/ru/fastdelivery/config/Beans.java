@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.fastdelivery.domain.common.currency.CurrencyFactory;
 import ru.fastdelivery.domain.common.currency.CurrencyPropertiesProvider;
-import ru.fastdelivery.domain.delivery.distanceCalc.DistanceCalculator;
 import ru.fastdelivery.domain.delivery.distanceCalc.DistanceFactory;
 import ru.fastdelivery.domain.delivery.distanceCalc.DistanceProvider;
 import ru.fastdelivery.usecase.TariffCalculateUseCase;
